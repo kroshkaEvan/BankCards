@@ -18,7 +18,7 @@ struct ContentView: View {
     private var shouldPresentCardForm = false
     @State
     private var shouldShowTransactionForm = false
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -38,10 +38,24 @@ struct ContentView: View {
                         .frame(height: 600)
                 }
             }
-            .navigationTitle("Credit Cards")
-            .navigationBarItems(leading: HStack {
-                DeleteItemButton(cards: cards, modelContext: modelContext)
-            }, trailing: AddCardButton(shouldPresentCardForm: $shouldPresentCardForm))
+            .navigationTitle("My Wallet")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    DeleteItemButton(cards: cards, modelContext: modelContext)
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    AddCardButton(shouldPresentCardForm: $shouldPresentCardForm)
+                }
+            }
+            .background {
+                LinearGradient(
+                    gradient: Gradient(colors: [.mint, .black]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
         }
     }
 }
@@ -114,7 +128,7 @@ struct DeleteItemButton: View {
                 }
             }
         } label: {
-            Text("Delete Item")
+            Text("Delete all cards")
                 .font(.system(size: 16, weight: .semibold))
                 .cornerRadius(7)
         }
